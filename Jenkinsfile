@@ -22,7 +22,7 @@ environment {
         stage('Build docker image'){
             steps{
                 script{
-                    bat 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                    bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'
                 }
             }
         }
@@ -41,7 +41,7 @@ environment {
                            docker logout
                            echo %DOCKER_TOKEN% | docker login -u coolravi --password-stdin
                        '''
-                   bat 'docker push ${IMAGE_NAME}:${IMAGE_TAG}'
+                   bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
         }
