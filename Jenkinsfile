@@ -21,10 +21,10 @@ pipeline {
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u coolravi -p ${dockerhubpwd}'
+                   bat 'docker login -u coolravi -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push javatechie/devops-integration'
+                   bat 'docker push javatechie/devops-integration'
                 }
             }
         }
