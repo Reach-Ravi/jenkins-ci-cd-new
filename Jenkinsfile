@@ -10,10 +10,18 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
+        environment {
+        APP_NAME="Jenkins-ci-cd-new"
+        RELEASE= "1.0.0"
+        DOCKER_USER="coolravi"
+        IMAGE_NAME="${DOCKER_USER}"+"/"+"${APP_NAME}"
+        IMAGE_TAG="${RELEASE}-${BUILD_NUMBER}"
+}
+
         stage('Build docker image'){
             steps{
                 script{
-                    bat 'docker build -t coolravi/devops-integration:1.0 .'
+                    bat 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
                 }
             }
         }
@@ -32,7 +40,7 @@ pipeline {
                            docker logout
                            echo %DOCKER_TOKEN% | docker login -u coolravi --password-stdin
                        '''
-                   bat 'docker push coolravi/devops-integration:1.0'
+                   bat 'docker push ${IMAGE_NAME}:${IMAGE_TAG}'
                 }
             }
         }
