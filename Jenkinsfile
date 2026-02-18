@@ -21,12 +21,12 @@ pipeline {
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
-                   bat '''
-                           if [ -z "$DOCKER_TOKEN" ]; then
-                             echo "TOKEN IS EMPTY"
-                           else
-                             echo "TOKEN RECEIVED"
-                           fi
+                       bat '''
+                           if "%DOCKER_TOKEN%"=="" (
+                               echo TOKEN IS EMPTY
+                           ) else (
+                               echo TOKEN RECEIVED
+                           )
                        '''
                    bat 'docker login -u coolravi -p ${dpn}'
                    bat 'docker push coolravi/devops-integration:1.0'
