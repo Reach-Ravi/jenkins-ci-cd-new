@@ -3,6 +3,13 @@ pipeline {
     tools{
         maven 'maven'
     }
+            environment {
+            APP_NAME="Jenkins-ci-cd-new"
+            RELEASE= "1.0.0"
+            DOCKER_USER="coolravi"
+            IMAGE_NAME="${DOCKER_USER}"+"/"+"${APP_NAME}"
+            IMAGE_TAG="${RELEASE}-${BUILD_NUMBER}"
+    }
     stages{
         stage('Build Maven'){
             steps{
@@ -10,13 +17,7 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-        environment {
-        APP_NAME="Jenkins-ci-cd-new"
-        RELEASE= "1.0.0"
-        DOCKER_USER="coolravi"
-        IMAGE_NAME="${DOCKER_USER}"+"/"+"${APP_NAME}"
-        IMAGE_TAG="${RELEASE}-${BUILD_NUMBER}"
-}
+
 
         stage('Build docker image'){
             steps{
