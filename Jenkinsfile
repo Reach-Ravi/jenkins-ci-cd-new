@@ -20,7 +20,14 @@ pipeline {
         stage('Push image to Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'dpn', variable: 'dpn')]) {
+                   withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
+                   bat '''
+                           if [ -z "$DOCKER_TOKEN" ]; then
+                             echo "TOKEN IS EMPTY"
+                           else
+                             echo "TOKEN RECEIVED"
+                           fi
+                       '''
                    bat 'docker login -u coolravi -p ${dpn}'
                    bat 'docker push coolravi/devops-integration:1.0'
                 }
