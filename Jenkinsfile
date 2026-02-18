@@ -13,7 +13,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    bat 'docker build -t coolravi/devops-integration .'
+                    bat 'docker build -t coolravi/devops-integration:1.0 .'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
                    bat 'docker login -u coolravi -p ${dockerhubpwd}'
 
 }
-                   bat 'docker push javatechie/devops-integration'
+                   bat 'docker push coolravi/devops-integration:1.0'
                 }
             }
         }
