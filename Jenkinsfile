@@ -28,7 +28,7 @@ pipeline {
                                echo TOKEN RECEIVED
                            )
                        '''
-                   bat 'docker login -u coolravi -p ${dpn}'
+                   bat 'docker login -u coolravi --password-stdin'
                    bat 'docker push coolravi/devops-integration:1.0'
                 }
             }
