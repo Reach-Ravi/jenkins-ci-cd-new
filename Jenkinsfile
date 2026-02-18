@@ -20,10 +20,8 @@ pipeline {
         stage('Push image to Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   bat 'docker login -u coolravi -p ${dockerhubpwd}'
-
-}
+                   withCredentials([string(credentialsId: 'dp', variable: 'dp')]) {
+                   bat 'docker login -u coolravi -p ${dp}'
                    bat 'docker push coolravi/devops-integration:1.0'
                 }
             }
