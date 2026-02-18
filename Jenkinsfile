@@ -1,32 +1,39 @@
 pipeline {
     agent any
-    tools {
-    maven "maven"
+    tools{
+        maven 'maven_3_5_0'
     }
-    stages {
-    stage('SCM Checkout') {
-    steps {
-    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Reach-Ravi/jenkins-ci-cd-new.git']])
-}
+    stages{
+        stage('Build Maven'){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Reach-Ravi/jenkins-ci-cd-new.git']]])
+                sh 'mvn clean install'
+            }
+        }
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t coolravi/devops-integration .'
+                }
+            }
+        }
+        /*stage('Push image to Hub'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                   sh 'docker login -u javatechie -p ${dockerhubpwd}'
 
 }
-    stage('Build process') {
-    steps {
-        script {
-            bat 'mvn clean install'
-     }
+                   sh 'docker push javatechie/devops-integration'
+                }
+            }
+        }*/
+        /*stage('Deploy to k8s'){
+            steps{
+                script{
+                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+                }
+            }
+        }*/
     }
-}
-    stage('build image') {
-    steps {
-    script {
-        bat 'docker build -t coolravi/springcicdnew:1.0 .'
-}
-}
-
-
-}
-
-}
-
 }
