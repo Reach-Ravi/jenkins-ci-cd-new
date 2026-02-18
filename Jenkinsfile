@@ -13,7 +13,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t coolravi/devops-integration .'
+                    bat 'docker build -t coolravi/devops-integration .'
                 }
             }
         }
